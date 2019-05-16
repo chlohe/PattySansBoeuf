@@ -1,0 +1,43 @@
+extends layout
+include relation
+
+block content
+  h1= title
+  div(id='banner')
+    p Welcome to #{title}
+    script(src='/javascripts/main.js')
+    script(src='/javascripts/people.js')
+    script(src='/javascripts/relations.js')
+  div(id='people')
+    h2 Who Shall We Invite?
+    div(id='instructions')
+    div(id='addPeople')
+      form
+        fieldset
+          label(for='nameField') Name
+          input(id='nameField' type='text' placeholder='Alice')
+          input(id='btnAddPerson' class='button-primary' type='submit' value='Add')
+    div(id='peopleTable')
+      h6 (Potential) Guestlist
+      table(id='pTable')
+  div(id='relations')
+    h2 Now For Politics
+    div(id='calculate')
+    div(id='addRelations')
+      form
+        fieldset
+          label(for='xField') Person 1
+          select(id='xField')
+          label(for='rField') Relation
+          select(id='rField')
+          label(for='yField') Person 2
+          select(id='yField')
+          input(id='btnAddRelation' class='button-primary' type='submit' value='Add')
+    div(id='relationsTable')
+      table(id='rTable')
+    div(id='solve')
+      button(id='btnSolve' class='button-primary') Generate Invites!
+  div(id='invitations')
+    div(id='results')
+      table(id='iTable')
+  
