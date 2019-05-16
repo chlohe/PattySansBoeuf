@@ -36,10 +36,20 @@ function solveRelations(){
 }
 
 function displayResults(data){
+    var inviteText = "Invite";
+    var notInviteText = "Nah";
+
     var results = new Map();
+    var peopleWithBeef = [];
     //Parse the results a wee bit
     Object.keys(data).forEach(function(key) {
-        results.set(key, data[key] ? "Invite" : "Nah");
+        results.set(key, data[key] ? inviteText : notInviteText);
+        peopleWithBeef.push(key);
+    });
+    //Invite the people sans boeuf
+    var peopleWithoutBeef = Array.from(people).filter(x => !peopleWithBeef.includes(x[0])).map(x => x[0]);
+    peopleWithoutBeef.forEach(x => {
+        results.set(x, inviteText);
     });
     //Populate table
     $('#iTable').html( `
