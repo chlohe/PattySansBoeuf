@@ -24,7 +24,9 @@ function removeRelation(key){
 
 function solveRelations(){
     var relArray = Array.from(relations).map(x => x[1]);
-    var payload = JSON.stringify(relArray);
+    var payload = {
+        data: JSON.stringify(relArray)
+    }
     //Clear the table
     $('#iTable').html('');
     //Send the problem 

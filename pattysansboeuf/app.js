@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var Logic = require('logic-solver');
+var translator = require('./translator');
 
 var indexRouter = require('./routes/index');
 
@@ -25,12 +26,16 @@ app.use('/', indexRouter);
 //Do the actual solving here
 app.post('/solve', function(req, res){
   var solver = new Logic.Solver();
-  solver.require(Logic.atMostOne("Alice", "Peter"));
-  solver.require(Logic.and("Alice", "Tom"));
-  solver.require(Logic.and("Gracie", "Luke"));
-  solver.require(Logic.atMostOne("Luke", "Florence"));
+  var parsed = translator.parse(req.body);
+  if (parsed == -1){
+    res.send("error");
+  }
+  var translated = translator.translate(parsed);
+  translated.forEach(x => {
+    solver.require(x);
+  })
   var sol1 = solver.solve();
-  sol1.getTrueVars() // => ["Bob"]
+  sol1.getTrueVars();
   res.send(JSON.stringify(sol1.getMap()));
 });
 
