@@ -34,9 +34,22 @@ app.post('/solve', function(req, res){
   translated.forEach(x => {
     solver.require(x);
   })
-  var sol1 = solver.solve();
-  sol1.getTrueVars();
-  res.send(JSON.stringify(sol1.getMap()));
+ 
+  var allSolutions = [];
+  var curSolution = null;
+  while ((curSolution = solver.solve())) {
+    allSolutions.push([curSolution.getTrueVars().length, curSolution.getMap()]);
+    solver.forbid(curSolution.getFormula());
+  }
+  //Get the solution with most people invited
+  var maxSol = allSolutions.sort((a, b) => a[0] < b[0] ? -1 : (a[0] > b[0] ? 1 : 0)).reverse()[0][1];
+  
+  if(allSolutions.length == 0){
+    res.send("error");
+  }
+  else{
+    res.send(JSON.stringify(maxSol));
+  }
 });
 
 

@@ -27,7 +27,7 @@ module.exports = {
     return Logic.atMostOne(x.x, x.y);
   },
   translateDates: function(x){
-    return Logic.and(x.x, x.y);
+    return Logic.equiv(x.x, x.y);
   },
   translateEx: function(x){
     //TODO: Figure out the translation for this one. Weightings?
