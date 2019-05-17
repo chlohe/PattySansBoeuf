@@ -1,14 +1,14 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var Logic = require('logic-solver');
-var translator = require('./translator');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const Logic = require('logic-solver');
+const translator = require('./translator');
 
-var indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,25 +24,25 @@ app.use('/', indexRouter);
 
 
 //Do the actual solving here
-app.post('/solve', function(req, res){
-  var solver = new Logic.Solver();
-  var parsed = translator.parse(req.body);
+app.post('/solve', (req, res) => {
+  const solver = new Logic.Solver();
+  const parsed = translator.parse(req.body);
   if (parsed == -1){
     res.send("error");
   }
-  var translated = translator.translate(parsed);
+  const translated = translator.translate(parsed);
   translated.forEach(x => {
     solver.require(x);
   })
  
-  var allSolutions = [];
-  var curSolution = null;
+  const allSolutions = [];
+  let curSolution = null;
   while ((curSolution = solver.solve())) {
     allSolutions.push([curSolution.getTrueVars().length, curSolution.getMap()]);
     solver.forbid(curSolution.getFormula());
   }
   //Get the solution with most people invited
-  var maxSol = allSolutions.sort((a, b) => a[0] < b[0] ? -1 : (a[0] > b[0] ? 1 : 0)).reverse()[0][1];
+  const maxSol = allSolutions.sort((a, b) => a[0] < b[0] ? -1 : (a[0] > b[0] ? 1 : 0)).reverse()[0][1];
   
   if(allSolutions.length == 0){
     res.send("error");
@@ -54,12 +54,12 @@ app.post('/solve', function(req, res){
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

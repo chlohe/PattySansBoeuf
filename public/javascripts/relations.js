@@ -2,13 +2,13 @@
 
 function addRelation(name, x, y){
     //Ensure we dont get key clash
-    var key = x+name+y;
+    const key = x+name+y;
     if (!relations.has(key)){
         //Do the actual adding
         relations.set(key, {
-            name: name,
-            x: x,
-            y: y
+            name,
+            x,
+            y
         })
     }
     else
@@ -23,31 +23,31 @@ function removeRelation(key){
 }
 
 function solveRelations(){
-    var relArray = Array.from(relations).map(x => x[1]);
-    var payload = {
+    const relArray = Array.from(relations).map(x => x[1]);
+    const payload = {
         data: JSON.stringify(relArray)
-    }
+    };
     //Clear the table
     $('#iTable').html('');
     //Send the problem 
-    $.post( "/solve", payload, function( data ) {
+    $.post( "/solve", payload, data => {
         displayResults(JSON.parse(data));    
     });
 }
 
 function displayResults(data){
-    var inviteText = "Invite";
-    var notInviteText = "Nah";
+    const inviteText = "Invite";
+    const notInviteText = "Nah";
 
-    var results = new Map();
-    var peopleWithBeef = [];
+    const results = new Map();
+    const peopleWithBeef = [];
     //Parse the results a wee bit
-    Object.keys(data).forEach(function(key) {
+    Object.keys(data).forEach(key => {
         results.set(key, data[key] ? inviteText : notInviteText);
         peopleWithBeef.push(key);
     });
     //Invite the people sans boeuf
-    var peopleWithoutBeef = Array.from(people).filter(x => !peopleWithBeef.includes(x[0])).map(x => x[0]);
+    const peopleWithoutBeef = Array.from(people).filter(x => !peopleWithBeef.includes(x[0])).map(x => x[0]);
     peopleWithoutBeef.forEach(x => {
         results.set(x, inviteText);
     });

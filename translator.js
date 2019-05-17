@@ -1,8 +1,8 @@
-var Logic = require('logic-solver');
+const Logic = require('logic-solver');
 
 module.exports = {
-  translate: function(source){
-    var results = [];
+  translate(source) {
+    const results = [];
     source.forEach(x => {
       if(x.name == 'hates'){
         results.push(this.translateHates(x));
@@ -16,20 +16,20 @@ module.exports = {
     });
     return results;
   },
-  parse: function(source){
-    var data = source.data;
+  parse(source) {
+    const data = source.data;
     if(data == undefined){
       return -1;
     }
     return JSON.parse(data);
   },
-  translateHates: function(x){
+  translateHates(x) {
     return Logic.atMostOne(x.x, x.y);
   },
-  translateDates: function(x){
+  translateDates(x) {
     return Logic.equiv(x.x, x.y);
   },
-  translateEx: function(x){
+  translateEx(x) {
     //TODO: Figure out the translation for this one. Weightings?
     return Logic.or(x.x, x.y);
   }
