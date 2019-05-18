@@ -93,4 +93,25 @@ $(document).ready(() => {
         solveRelations();
     })
 
+    
+    var typewriter = new Typewriter($('#tagline')[0], {
+        loop: true
+    });
+    
+    typewriter.typeString('Parties without the Politics')
+        .pauseFor(2500)
+        .deleteChars(8)
+        .typeString('Tears')
+        .pauseFor(2500)
+        .deleteChars(5)
+        .typeString('Beef')
+        .pauseFor(2500)
+        .deleteChars(4)
+        .typeString('Emotional Breakdowns')
+        .pauseFor(2500)
+        .deleteChars(20)
+        .typeString('Pressure of Deciding who gets Invited')
+        .pauseFor(2500)
+        .start();
+
 })
