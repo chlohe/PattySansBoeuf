@@ -1,8 +1,18 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+@media (max-width:70rem) { 
+  html{
+    font-size: 100% !important;
+  }
 }
-
-a {
-  color: #00B7FF;
+.banner-logo{
+  width: 20rem;
+}
+.content {
+  padding: 50px;
+}
+.banner{
+  background-color: #f1f1f1;
+  text-align: center;
+}
+.footer{
+  background-color: #f1f1f1;
 }
