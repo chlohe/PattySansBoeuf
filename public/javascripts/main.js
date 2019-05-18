@@ -54,11 +54,7 @@ $(document).ready(() => {
         //Append to our map, making sure arities are right
         addRelation(name, x, arity == 1 ? '' : y);
         //Populate table
-        $('#rTable').html( `
-            <tr> 
-                ${Array.from(relations).sort().map(r => `<tr id='relation-${r[0]}'><td> ${decodeURIComponent(r[1].x)} </td> <td> ${relationTypes.get(r[1].name).name} </td> <td> ${decodeURIComponent(r[1].y)} </td></tr>`)}
-            </tr>
-        `);
+        refreshRelationTable();
     });
 
     //On Change X

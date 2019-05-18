@@ -25,7 +25,7 @@ function refreshPeopleTable(){
         <tr> 
             ${Array.from(people).sort().map(p => 
                 `<tr id='person-${p[0]}'><td> ${decodeURIComponent(p[0])} </td>
-                <td class='table-options'> <a id='remove-${p[0]}' class='rmp-button'> [remove] </a> </td></tr>`
+                <td class='table-options'> <a id='remove-${p[0]}' class='rmp-button'> (x) </a> </td></tr>`
             )};
         </tr>
     `);

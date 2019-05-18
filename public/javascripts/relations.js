@@ -22,6 +22,25 @@ function removeRelation(key){
     relations.delete(key);
 }
 
+function refreshRelationTable(){
+    $('#rTable').html( `
+        <tr> 
+            ${Array.from(relations).sort().map(r => 
+                `<tr id='relation-${r[0]}'>
+                    <td> ${decodeURIComponent(r[1].x)} </td>
+                    <td> ${relationTypes.get(r[1].name).name} </td>
+                    <td> ${decodeURIComponent(r[1].y)} </td>
+                    <td class='table-options'> <a id='remove-${r[0]}' class='rmr-button'> (x) </a> </td>
+                </tr>`
+            )}
+        </tr>
+    `);
+    $('.rmr-button').click(e => {
+        removeRelation(e.target.id.substring(7));
+        refreshRelationTable();
+    });
+}
+
 function solveRelations(){
     const relArray = Array.from(relations).map(x => x[1]);
     const payload = {
