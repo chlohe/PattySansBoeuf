@@ -4,6 +4,7 @@ const people = new Map();
 const relationTypes = new Map();
 
 $(document).ready(() => {
+
     //Populate relationTypes
     relationTypes.set('hates', {name: 'hates', arity: 2});
     relationTypes.set('dates', {name: 'is dating', arity: 2});
@@ -66,11 +67,14 @@ $(document).ready(() => {
     //On Change X
     $('#xField').on('change', function (e) {
         const valueSelected = this.value;
+        const yField = $('#yField');
         //Populate other field with everything BUT our option
         //Again, don't forget to decode the name
-        $('#yField').html(`
-            ${Array.from(people).filter(p => p[0] != valueSelected).sort().map(p => `<option value=${p[0]}> ${decodeURIComponent(p[0])} </option>`)}
-        `)
+        if(!yField.prop('disabled')){
+            yField.html(`
+                ${Array.from(people).filter(p => p[0] != valueSelected).sort().map(p => `<option value=${p[0]}> ${decodeURIComponent(p[0])} </option>`)}
+            `);
+        }
     });
 
     //On Change R
