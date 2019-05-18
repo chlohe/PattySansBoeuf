@@ -29,12 +29,13 @@ $(document).ready(() => {
         //Populate table
         $('#pTable').html( `
             <tr> 
-                ${Array.from(people).sort().map(p => `<tr id='person-${p[0]}'><td> ${p[0]} </td></tr>`)}
+                ${Array.from(people).sort().map(p => `<tr id='person-${p[0]}'><td> ${decodeURIComponent(p[0])} </td></tr>`)}
             </tr>
         `);
         //Populate combobox options
+        //NE PAS OUBLIER QUE LE "NOM" (p[0]) EST CODÉ!! (Utilisez 'decodeURIComponent')
         $('#xField').html(`
-            ${Array.from(people).sort().map(p => `<option value=${p[0]}> ${p[0]} </option>`)}
+            ${Array.from(people).sort().map(p => `<option value=${p[0]}> ${decodeURIComponent(p[0])} </option>`)}
         `)
         $('#xField').val('');
     });
@@ -55,7 +56,7 @@ $(document).ready(() => {
         //Populate table
         $('#rTable').html( `
             <tr> 
-                ${Array.from(relations).sort().map(r => `<tr id='relation-${r[0]}'><td> ${r[1].x} </td> <td> ${relationTypes.get(r[1].name)} </td> <td> ${r[1].y} </td></tr>`)}
+                ${Array.from(relations).sort().map(r => `<tr id='relation-${r[0]}'><td> ${decodeURIComponent(r[1].x)} </td> <td> ${relationTypes.get(r[1].name)} </td> <td> ${decodeURIComponent(r[1].y)} </td></tr>`)}
             </tr>
         `);
     });
@@ -65,8 +66,9 @@ $(document).ready(() => {
         const optionSelected = $("option:selected", this);
         const valueSelected = this.value;
         //Populate other field with everything BUT our option
+        //Again, don't forget to decode the name
         $('#yField').html(`
-            ${Array.from(people).filter(p => p[0] != valueSelected).sort().map(p => `<option value=${p[0]}> ${p[0]} </option>`)}
+            ${Array.from(people).filter(p => p[0] != valueSelected).sort().map(p => `<option value=${p[0]}> ${decodeURIComponent(p[0])} </option>`)}
         `)
     });
 

@@ -1,6 +1,8 @@
 //people is GLOBAL Map variable declared in main.js
 
 function addPerson(name){
+    //Escape spaces and dodgy shit
+    name = encodeURIComponent(name);
     //Ensure we dont get key clash
     if (!people.has(name)){
         //Do the actual adding
@@ -14,5 +16,6 @@ function addPerson(name){
 }
 
 function removePerson(name){
+    name = encodeURIComponent(name);
     people.delete(name);
 }

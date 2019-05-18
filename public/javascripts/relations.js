@@ -52,9 +52,10 @@ function displayResults(data){
         results.set(x, inviteText);
     });
     //Populate table
+    //Don't forget to decode the names!
     $('#iTable').html( `
         <tr> 
-            ${Array.from(results).sort().map(r => `<tr id='invitation-${r[0]}'><td> ${r[0]} </td> <td> ${r[1]} </td> </tr>`)}
+            ${Array.from(results).sort().map(r => `<tr id='invitation-${r[0]}'><td> ${decodeURIComponent(r[0])} </td> <td> ${r[1]} </td> </tr>`)}
         </tr>
     `);
 }
