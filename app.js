@@ -41,13 +41,13 @@ app.post('/solve', (req, res) => {
     allSolutions.push([curSolution.getTrueVars().length, curSolution.getMap()]);
     solver.forbid(curSolution.getFormula());
   }
-  //Get the solution with most people invited
-  const maxSol = allSolutions.sort((a, b) => a[0] < b[0] ? -1 : (a[0] > b[0] ? 1 : 0)).reverse()[0][1];
-  
+
   if(allSolutions.length == 0){
-    res.send("error");
+    res.send("nosols");
   }
   else{
+    //Get the solution with most people invited
+    const maxSol = allSolutions.sort((a, b) => a[0] < b[0] ? -1 : (a[0] > b[0] ? 1 : 0)).reverse()[0][1];  
     res.send(JSON.stringify(maxSol));
   }
 });

@@ -31,8 +31,17 @@ function solveRelations(){
     $('#iTable').html('');
     //Send the problem 
     $.post( "/solve", payload, data => {
-        displayResults(JSON.parse(data));    
+        try{
+            displayResults(JSON.parse(data));    
+        }
+        catch(e){
+            displasyLackOfResults();
+        }
     });
+}
+
+function displasyLackOfResults(){
+    $('#iTable').html("Ur fucked m9 :(");
 }
 
 function displayResults(data){
