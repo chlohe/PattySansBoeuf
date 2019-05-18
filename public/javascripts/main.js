@@ -29,11 +29,8 @@ $(document).ready(() => {
         //Reset the field
         nameField.val("");
         //Populate table
-        $('#pTable').html( `
-            <tr> 
-                ${Array.from(people).sort().map(p => `<tr id='person-${p[0]}'><td> ${decodeURIComponent(p[0])} </td></tr>`)}
-            </tr>
-        `);
+        refreshPeopleTable();
+
         //Populate combobox options
         //NE PAS OUBLIER QUE LE "NOM" (p[0]) EST CODÉ!! (Utilisez 'decodeURIComponent')
         $('#xField').html(`

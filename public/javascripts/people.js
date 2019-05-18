@@ -19,3 +19,18 @@ function removePerson(name){
     name = encodeURIComponent(name);
     people.delete(name);
 }
+
+function refreshPeopleTable(){
+    $('#pTable').html( `
+        <tr> 
+            ${Array.from(people).sort().map(p => 
+                `<tr id='person-${p[0]}'><td> ${decodeURIComponent(p[0])} </td>
+                <td class='table-options'> <a id='remove-${p[0]}' class='rmp-button'> [remove] </a> </td></tr>`
+            )};
+        </tr>
+    `);
+    $('.rmp-button').click(e => {
+        removePerson(e.target.id.substring(7));
+        refreshPeopleTable();
+    });
+}
