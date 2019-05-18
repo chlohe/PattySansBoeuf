@@ -30,7 +30,12 @@ function refreshPeopleTable(){
         </tr>
     `);
     $('.rmp-button').click(e => {
-        removePerson(e.target.id.substring(7));
+        const name = e.target.id.substring(7);
+        //Remove the person
+        removePerson(name);
         refreshPeopleTable();
+        //Remove all relations involving said person
+        Array.from(relations).filter(r => r[1].x == name || r[1].y == name).forEach(r => removeRelation(r[0]));
+        refreshRelationTable();
     });
 }
