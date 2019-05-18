@@ -12,6 +12,8 @@
 .banner{
   background-color: #f1f1f1;
   text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 .footer{
   background-color: #f1f1f1;

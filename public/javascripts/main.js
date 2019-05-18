@@ -5,12 +5,13 @@ const relationTypes = new Map();
 
 $(document).ready(() => {
     //Populate relationTypes
-    relationTypes.set('hates', 'hates');
-    relationTypes.set('dates', 'is dating');
-    relationTypes.set('ex', 'used to date');
+    relationTypes.set('hates', {name: 'hates', arity: 2});
+    relationTypes.set('dates', {name: 'is dating', arity: 2});
+    relationTypes.set('ex', {name: 'used to date', arity: 2});
+    relationTypes.set('comes', {name: 'must come', arity: 1});
 
     $('#rField').html(`
-        ${Array.from(relationTypes).map(r => `<option value='${r[0]}'> ${r[1]} </option>`)}
+        ${Array.from(relationTypes).map(r => `<option value='${r[0]}'> ${r[1].name} </option>`)}
     `);
 
     //Adding people button   
@@ -47,29 +48,39 @@ $(document).ready(() => {
         const x = $('#xField').val();
         const y = $('#yField').val();
         const name = $('#rField').val();
+        const arity = relationTypes.get(name).arity;
         //Check for empty values
-        if(x == null || y == null || name == null){
+        if(x == null || (y == null && arity == 2) || name == null){
             return;
         }
-        //Append to our map
-        addRelation(name, x, y);
+        //Append to our map, making sure arities are right
+        addRelation(name, x, arity == 1 ? '' : y);
         //Populate table
         $('#rTable').html( `
             <tr> 
-                ${Array.from(relations).sort().map(r => `<tr id='relation-${r[0]}'><td> ${decodeURIComponent(r[1].x)} </td> <td> ${relationTypes.get(r[1].name)} </td> <td> ${decodeURIComponent(r[1].y)} </td></tr>`)}
+                ${Array.from(relations).sort().map(r => `<tr id='relation-${r[0]}'><td> ${decodeURIComponent(r[1].x)} </td> <td> ${relationTypes.get(r[1].name).name} </td> <td> ${decodeURIComponent(r[1].y)} </td></tr>`)}
             </tr>
         `);
     });
 
     //On Change X
     $('#xField').on('change', function (e) {
-        const optionSelected = $("option:selected", this);
         const valueSelected = this.value;
         //Populate other field with everything BUT our option
         //Again, don't forget to decode the name
         $('#yField').html(`
             ${Array.from(people).filter(p => p[0] != valueSelected).sort().map(p => `<option value=${p[0]}> ${decodeURIComponent(p[0])} </option>`)}
         `)
+    });
+
+    //On Change R
+    $('#rField').on('change', function (e) {
+        const yField = $('#yField');
+        const valueSelected = this.value;
+        //Set y field enabled based upon linear/bilinear
+        const linear = relationTypes.get(valueSelected).arity == 1;
+        yField.prop('disabled', linear);
+        yField.val(linear ? '' : yField.val());
     });
 
     //Solve button

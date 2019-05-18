@@ -13,6 +13,9 @@ module.exports = {
       if(x.name == 'ex'){
         results.push(this.translateEx(x));
       }
+      if(x.name == 'comes'){
+        results.push(this.translateComes(x));
+      }
     });
     return results;
   },
@@ -32,6 +35,9 @@ module.exports = {
   translateEx(x) {
     //TODO: Figure out the translation for this one. Weightings?
     return Logic.or(x.x, x.y);
+  },
+  translateComes(x) {
+    return x.x;
   }
 
 }
